@@ -42,6 +42,7 @@ libifmapio = env.Library('ifmapio',
 
 env.Requires(libifmapio, '#build/lib/libSimpleAmqpClient.a')
 env.Requires(libifmapio, '#/build/include/rapidjson.h')
+env.Requires(libifmapio, '#build/lib/libcql_static.a')
 env.Install(env['TOP_LIB'], libifmapio)
 
 client_unit_tests = env.SConscript('test/SConscript', exports='BuildEnv',

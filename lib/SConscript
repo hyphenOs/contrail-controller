@@ -13,6 +13,7 @@ subdirs = [
     'SimpleAmqpClient',
     'thrift',
     'openvswitch',
+    'libcql',
 ]
 
 (distname, version, _) = platform.dist()

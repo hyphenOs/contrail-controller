@@ -29,7 +29,10 @@ def Symlink(target, source):
         os.makedirs(parent)
 
     if not os.path.exists(target[0].abspath):
-        os.symlink(source[0].abspath, target[0].abspath)
+        try:
+            os.symlink(source[0].abspath, target[0].abspath)
+        except OSError:
+            pass
 
 Symlink([Dir('#/build/include/openvswitch/include')], [Dir(vpath + '/include')])
 Symlink([Dir('#/build/include/openvswitch/lib')], [Dir(vpath + '/lib')])

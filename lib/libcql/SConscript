@@ -1,13 +1,30 @@
 # -*- mode: python; -*-
 
-vpath = '#/third_party/cpp-driver'
+vpath = '#/third_party/cassandra-cpp-driver'
 
 env = DefaultEnvironment()
 
-cmd = ('(cd ' + Dir('.').abspath + '; BOOST_INCLUDEDIR=' + Dir('#build/include').abspath + ' BOOST_LIBRARYDIR=' + Dir('#build/lib').abspath + ' cmake -DCMAKE_INSTALL_PREFIX=' + Dir('#build').abspath + ' ' + str(Dir(vpath)) + '; make; make install)')
+output_dir = Dir('.').abspath
 
-products = [ str(File('#build/lib/libcql_static.a')),
-             str(File('#build/include/cql/cql.hpp')) ]
+make_flags = '-DCMAKE_INSTALL_PREFIX=' + output_dir
+
+include_dir = output_dir + '/include/'
+
+libcql_static_name = 'libcql_static.a'
+libcql_lib_product = Dir('#build/lib').abspath + '/' + libcql_static_name
+
+cassandra_header_name = 'cassandra.h'
+cassandra_header_product = Dir('#build/include').abspath  + '/' + cassandra_header_name
+
+cmd = ('(cd ' + output_dir + ';' +
+	#' BOOST_INCLUDEDIR=' + Dir('#build/include').abspath + ' BOOST_LIBRARYDIR=' + Dir('#build/lib').abspath +
+	' cmake ' + make_flags + ' ' + str(Dir(vpath).abspath) + ';' +
+	'cmake --build ' + Dir(vpath).abspath + ' --target install;' +
+	'cp lib/' + libcql_static_name + ' ' + libcql_lib_product + ';'
+	'cp include/' + cassandra_header_name + ' ' + cassandra_header_product + ';'
+	')')
+
+products = [libcql_lib_product, cassandra_header_product]
 
 libcql = env.Command('Makefile', str(Dir(vpath)), cmd)
 
