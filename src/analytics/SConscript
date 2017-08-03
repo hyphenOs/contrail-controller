@@ -64,7 +64,7 @@ AnalyticsEnv.Prepend(LIBS=['cpuinfo',
 
 (PLATFORM, VERSION, EXTRA) = platform.linux_distribution()
 if PLATFORM.lower() != 'ubuntu' or (PLATFORM.lower() == 'ubuntu' and VERSION.find('16.') == 0):
-    AnalyticsEnv.Prepend(LIBS=['sasl2'])
+    AnalyticsEnv.Prepend(LIBS=['sasl2', 'dl'])
 
 database_libs = ['cassandra_cql', 'cassandra']
 
@@ -274,10 +274,10 @@ AnalyticsEnv.Alias('install', AnalyticsEnv.InstallAs(
 AnalyticsEnv.Alias('install', AnalyticsEnv.Install(
             AnalyticsEnv['INSTALL_CONF'], 'supervisord_analytics.conf'))
 AnalyticsEnv.Alias('install', AnalyticsEnv.Install(
-            AnalyticsEnv['INSTALL_CONF'] + 
+            AnalyticsEnv['INSTALL_CONF'] +
             '/supervisord_analytics_files', 'contrail-analytics.rules'))
 AnalyticsEnv.Alias('install', AnalyticsEnv.Install(
-            AnalyticsEnv['INSTALL_CONF'] + 
+            AnalyticsEnv['INSTALL_CONF'] +
             '/supervisord_analytics_files', 'contrail-collector.ini'))
 AnalyticsEnv.Alias('install', AnalyticsEnv.Install(
             AnalyticsEnv['INSTALL_MESSAGE_DOC'] + '/contrail-collector/', CollectorDocFiles))

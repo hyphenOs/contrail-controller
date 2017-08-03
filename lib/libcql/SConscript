@@ -10,8 +10,9 @@ make_flags = '-DCMAKE_INSTALL_PREFIX=' + output_dir
 
 include_dir = output_dir + '/include/'
 
-libcql_static_name = 'libcql_static.a'
-libcql_lib_product = Dir('#build/lib').abspath + '/' + libcql_static_name
+libcql_static_name = 'libcassandra_static.a'
+libcql_deploy_name = 'libcassandra.a'
+libcql_lib_product = Dir('#build/lib').abspath + '/' + libcql_deploy_name
 
 cassandra_header_name = 'cassandra.h'
 cassandra_header_product = Dir('#build/include').abspath  + '/' + cassandra_header_name

@@ -1,0 +1,32 @@
+# -*- mode: python; -*-
+
+# path to the sources
+vpath = '#/third_party/librdkafka'
+
+env = DefaultEnvironment().Clone()
+
+VariantDir(vpath + '/src', '#/' + Dir('.').path + '/src')
+
+# use 'configure' first to set things up
+cfg_opts = '--prefix=' + str(Dir('#/build'))
+
+config_cmd = ('(cd ' + Dir(vpath).abspath + '; ' + str(Dir(vpath).abspath) +
+           '/configure' + ' ' + cfg_opts + ')')
+
+config_products = ['Makefile']
+
+print str(Dir(vpath).abspath)
+
+librdkafa_cfg = env.Command('config.status', str(Dir(vpath).abspath) + '/configure', config_cmd)
+
+env.SideEffect(config_products, librdkafa_cfg)
+
+make_cmd = ('(cd ' + Dir(vpath).abspath + '; ' +
+            'make clean; make; make install)')
+
+make_products = ['#/build/lib/librdkafka++.a', '#/build/include/librdkafka/rdkafkacpp.h']
+
+librdkafka_make = env.Command(make_products, 'Makefile', make_cmd)
+
+env.Depends(librdkafka_make, librdkafa_cfg)
+

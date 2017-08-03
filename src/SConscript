@@ -46,7 +46,7 @@ include = ['#/controller/src', '#/build/include', '#controller/lib']
 
 libpath = ['#/build/lib']
 
-libs = ['boost_system', 'log4cplus', 'pthread']
+libs = ['boost_system', 'log4cplus', 'pthread', 'uv']
 
 common = DefaultEnvironment().Clone()
 
